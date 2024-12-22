@@ -5,7 +5,6 @@ import { auth, signOut, signIn } from "@/auth";
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Navbar = async () => {
-  // auth config is missing
   const session = await auth();
 
   return (
