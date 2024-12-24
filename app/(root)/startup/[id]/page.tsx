@@ -1,9 +1,5 @@
 import { Suspense } from "react";
 import { client } from "@/sanity/lib/client";
-import {
-  PLAYLIST_BY_SLUG_QUERY,
-  STARTUP_BY_ID_QUERY,
-} from "@/lib/queries";
 import { notFound } from "next/navigation";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
@@ -13,6 +9,10 @@ import markdownit from "markdown-it";
 import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View";
 import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
+import {
+  PLAYLIST_BY_SLUG_QUERY,
+  STARTUP_BY_ID_QUERY,
+} from "@/sanity/lib/queries";
 
 const md = markdownit();
 
@@ -42,17 +42,17 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       </section>
 
       <section className="section_container">
-        <img
+        <Image
           src={post.image}
           alt="thumbnail"
-          className="w-full h-auto rounded-xl"
+          className="h-auto w-full rounded-xl"
         />
 
-        <div className="space-y-5 mt-10 max-w-4xl mx-auto">
+        <div className="mx-auto mt-10 max-w-4xl space-y-5">
           <div className="flex-between gap-5">
             <Link
               href={`/user/${post.author?._id}`}
-              className="flex gap-2 items-center mb-3"
+              className="mb-3 flex items-center gap-2"
             >
               <Image
                 src={post.author.image}
@@ -76,7 +76,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           <h3 className="text-30-bold">Pitch Details</h3>
           {parsedContent ? (
             <article
-              className="prose max-w-4xl font-work-sans break-all"
+              className="prose max-w-4xl break-all font-work-sans"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
           ) : (
@@ -87,10 +87,10 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <hr className="divider" />
 
         {editorPosts?.length > 0 && (
-          <div className="max-w-4xl mx-auto">
+          <div className="mx-auto max-w-4xl">
             <p className="text-30-semibold">Editor Picks</p>
 
-            <ul className="mt-7 card_grid-sm">
+            <ul className="card_grid-sm mt-7">
               {editorPosts.map((post: StartupTypeCard, i: number) => (
                 <StartupCard key={i} post={post} />
               ))}
